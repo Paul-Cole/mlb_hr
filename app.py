@@ -43,13 +43,16 @@ positions = ['C','1B','2B','SS','3B','LF','CF','RF','DH']
 
 
 def create_subset(name, ids):
-    subset = hits[hits.mlbID.isin(ids)].sort_values(by="mlbID", key=lambda x: x.map({v: i for i, v in enumerate(ids)}))[['Name','Tm','HR']].copy()
+    subset = hits[hits.mlbID.isin(ids)].sort_values(by="mlbID", key=lambda x: x.map({v: i for i, v in enumerate(ids)}))[['Name', 'Tm', 'HR']].copy()
     subset['name'] = name
     
     # Ensure the length matches the number of positions
     if len(subset) < len(positions):
-        for _ in range(len(positions) - len(subset)):
-            subset = subset.append(pd.Series({'Name': 'inactive', 'Tm': 'inactive', 'name': name}), ignore_index=True)
+        additional_rows = pd.DataFrame({'Name': ['inactive'] * (len(positions) - len(subset)),
+                                        'Tm': ['inactive'] * (len(positions) - len(subset)),
+                                        'HR': [None] * (len(positions) - len(subset)),
+                                        'name': [name] * (len(positions) - len(subset))})
+        subset = pd.concat([subset, additional_rows], ignore_index=True)
     
     subset['Position'] = positions
     return subset.set_index('Position')
