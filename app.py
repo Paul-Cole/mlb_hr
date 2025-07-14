@@ -16,11 +16,13 @@ today = datetime.today().strftime('%Y-%m-%d')
 import glob
 import os
 
-# Format today's date as a string in yyyy-mm-dd format
+import requests
+from bs4 import BeautifulSoup
 
-
-# In[189]:
-
+url = "https://www.baseball-reference.com/leagues/majors/2025-standard-batting.shtml"
+resp = requests.get(url)
+print("STATUS CODE:", resp.status_code)
+print("FIRST 500 CHARS OF HTML:", resp.text[:500])
 
 hits = pb.batting_stats_range("2025-07-06", today)
 
