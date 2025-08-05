@@ -9,7 +9,8 @@ from datetime import datetime
 today = datetime.today().strftime('%Y-%m-%d') 
 
 # Format today's date as a string in yyyy-mm-dd format
-
+from pybaseball import cache
+cache.disable()
 
 # In[6]:
 
