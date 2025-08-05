@@ -15,7 +15,7 @@ cache.disable()
 # In[6]:
 
 
-hits = pb.batting_stats_range("2025-07-16", today)
+hits = pb.batting_stats_range("2025-07-16", "2025-07-17")
 
 
 # In[8]:
